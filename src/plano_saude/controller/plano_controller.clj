@@ -1,0 +1,75 @@
+(ns plano-saude.controller.plano-controller
+  (:require [ring.util.http-status :as http-status]
+            [plano-saude.validacoes.schemas :as schem]
+            [plano-saude.validacoes.validacoes :as valid]
+            [plano-saude.utils.util :as util]
+            [plano-saude.utils.mensagens :as msg]
+            [plano-saude.database.plano-db :as db]
+            [clojure.data.json :as json]
+            [plano-saude.utils.response :as respo]
+            [clojure.string :as s]))
+
+
+(defn cadastrar [{:keys [cnpj nome descricao] :as mapa}]
+  (try
+    (let [retorno (valid/validar-schema schem/plano-schema mapa)]
+      (if (nil? retorno)
+        (do (db/cadastrar cnpj nome descricao)
+            (respo/response http-status/created (json/write-str
+                                                 {:mensagem (:sucesso msg/mensagem)})))
+        (respo/response http-status/internal-server-error (json/write-str
+                                                           {:mensagem retorno}))))
+    (catch Exception e
+      (if (s/includes? (ex-message e) "unique")
+        (respo/erro-registro-unico-response)
+        (respo/erro-response)))))
+
+(defn obter-todos []
+  (try
+    (let [lista (db/obter-todos)
+          http (util/verifica-http-code lista)]
+      (respo/response http (json/write-str (vec lista))))
+    (catch Exception _
+      (respo/erro-response))))
+
+(defn obter-ativos []
+  (try
+    (let [lista (db/obter-ativos)
+          http (util/verifica-http-code lista)]
+      (respo/response http (json/write-str (vec lista))))
+    (catch Exception _
+      (respo/erro-response))))
+
+(defn obter-por-id [{:keys [id]}]
+  (try
+    (let [lista (db/obter-por-id (Integer/parseInt id))
+          http (util/verifica-http-code lista)]
+      (respo/response http (json/write-str (vec lista))))
+    (catch Exception _
+      (respo/erro-response))))
+
+(defn atualizar-status [{:keys [id]}
+                        {:keys [ativo]}]
+  (try
+    (let [linha (db/atualizar-status (Integer/parseInt id) ativo)]
+      (if (= (first linha) 1)
+        (respo/sucesso-response)
+        (respo/erro-registro-nao-encontrado-response)))
+    (catch Exception _
+      (respo/erro-response))))
+
+(defn atualizar [{:keys [id]}
+                 {:keys [cnpj nome descricao] :as mapa}]
+  (try
+    (let [retorno (valid/validar-schema schem/plano-schema mapa)
+          linha (when (nil? retorno)
+                  (db/atualizar (Integer/parseInt id) cnpj nome descricao))]
+
+      (cond
+        (= (first linha) 1) (respo/sucesso-response)
+        (some? retorno) (respo/response http-status/internal-server-error (json/write-str {:mensagem retorno}))
+        :else (respo/erro-registro-nao-encontrado-response)))
+    (catch Exception e
+      (if (s/includes? (ex-message e) "unique")
+        (respo/erro-registro-unico-response)
+        (respo/erro-response)))))
