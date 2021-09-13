@@ -23,6 +23,7 @@
                                        [lambdaisland/kaocha "1.0.887"]
                                        [lambdaisland/kaocha-cloverage "1.0.72"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}}
-  :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]})
+  :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]}
+  :resource-paths ["src/main/resources"])
 
 

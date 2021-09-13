@@ -28,7 +28,6 @@
 
 (deftest rotas-ficha-inclusao-teste
   (config-db/tipo-conexao-db "teste")
-  (config-db/criar-banco-memoria)
 
   (let [ficha "/ficha-inclusao/"
         dados-ficha {:nome "Maria Silva"

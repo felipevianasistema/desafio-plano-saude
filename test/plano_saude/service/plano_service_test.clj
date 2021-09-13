@@ -28,7 +28,6 @@
 
 (deftest rotas-plano-saude-teste
   (config-db/tipo-conexao-db "teste")
-  (config-db/criar-banco-memoria)
 
   (let [plano "/plano/"
         dados-plano {:cnpj "11025035000100"

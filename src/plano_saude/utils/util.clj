@@ -23,13 +23,17 @@
     http-status/ok))
 
 
-(defn gerar-cnpj []
+(defn gerar-cnpj
+  "Gera cnpj aleatório e sem máscara"
+  []
   (-> (cnpj/gen)
       (s/replace "." "")
       (s/replace "-" "")
       (s/replace "/" "")))
 
-(defn gerar-cpf []
+(defn gerar-cpf
+  "Gera cpf aleatório e sem máscara"
+  []
   (-> (cpf/gen)
       (s/replace "." "")
       (s/replace "-" "")
