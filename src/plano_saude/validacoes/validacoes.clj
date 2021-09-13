@@ -35,10 +35,8 @@
   [data]
   (try
     (let [formato (DateTimeFormatter/ofPattern "dd/MM/yyyy")]
-      (if (string? data)
-        (do (LocalDate/parse data formato)
-            true)
-        false))
+      (LocalDate/parse data formato)
+      true)
     (catch DateTimeParseException _
       false)))
 
