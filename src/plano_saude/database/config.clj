@@ -1,5 +1,6 @@
 (ns plano-saude.database.config
-  (:require [clojure.java.jdbc :as jdbc]))
+  (:require [clojure.java.jdbc :as jdbc]
+            [clojure.java.io :as io]))
 
 (def ^:private producao
   "Executa a base de dados local"
@@ -22,13 +23,10 @@
 
 (defn tipo-conexao-db
   "Deve ser informado o tipo da conexão 'prod' ou 'teste'.
-   Para prod: executa na base de dados local.
-   Para teste: executa na base de dados em memória."
+   Prod: executa na base de dados local.
+   Teste: executa na base de dados em memória."
   [tipo]
   (if (= "prod" tipo)
     (reset! con-db-atm producao)
-    (reset! con-db-atm teste)))
-
-(defn criar-banco-memoria []
-  (jdbc/execute! @con-db-atm [(slurp "resources/sql/script_banco.sql")]))
-
+    (reset! con-db-atm teste))
+  (jdbc/execute! @con-db-atm [(slurp (io/resource "main/resources/sql/script_banco.sql"))]))
