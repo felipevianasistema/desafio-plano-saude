@@ -1,14 +1,14 @@
 (ns plano-saude.controller.ficha-inclusao-controller
-  (:require [ring.util.http-status :as http-status]
-            [plano-saude.validacoes.validacoes :as valid]
+  (:require [clojure.string :as s]
+            [clojure.data.json :as json]
             [clojure.tools.logging :as log]
             [plano-saude.utils.util :as util]
-            [plano-saude.validacoes.schemas :as schem]
-            [plano-saude.database.ficha-inclusao-db :as db]
             [plano-saude.utils.mensagens :as msg]
-            [clojure.data.json :as json]
             [plano-saude.utils.response :as respo]
-            [clojure.string :as s]))
+            [ring.util.http-status :as http-status]
+            [plano-saude.validacoes.schemas :as schem]
+            [plano-saude.validacoes.validacoes :as valid]
+            [plano-saude.database.ficha-inclusao-db :as db]))
 
 (defn cadastrar [{:keys [nome cpf dt-admissao email endereco peso-kg
                          altura-cm hrs-meditadas-ultimos-dias cd-plano] :as mapa}]

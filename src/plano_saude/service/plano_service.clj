@@ -1,13 +1,13 @@
 (ns plano-saude.service.plano-service
-  (:require [io.pedestal.http.route.definition.table :as table]
-            [io.pedestal.http.body-params :as bp]
+  (:require [io.pedestal.http.body-params :as bp]
+            [io.pedestal.http.route.definition.table :as table]
             [plano-saude.controller.plano-controller :as controller]))
 
 (defn- cadastrar
   "Cadastro da ficha de inclusão"
   [request]
-  (let [body (:json-params (bp/json-parser request))]
-    (controller/cadastrar body)))
+  (let [body-params (:json-params (bp/json-parser request))]
+    (controller/cadastrar body-params)))
 
 (defn- obter-todos
   "Retorna todos independente do status true/false"

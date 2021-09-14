@@ -1,38 +1,38 @@
 (ns plano-saude.service.ficha-inclusao-service
-  (:require [io.pedestal.http.route.definition.table :as table]
-            [io.pedestal.http.body-params :as bp]
+  (:require [io.pedestal.http.body-params :as bp]
+            [io.pedestal.http.route.definition.table :as table]
             [plano-saude.controller.ficha-inclusao-controller :as controller]))
 
-(defn- cadastrar 
+(defn- cadastrar
   "Cadastro da ficha de inclusão"
   [request]
-  (let [body (:json-params (bp/json-parser request))]
-    (controller/cadastrar body)))
+  (let [body-params (:json-params (bp/json-parser request))]
+    (controller/cadastrar body-params)))
 
-(defn- obter-todos 
+(defn- obter-todos
   "Retorna todos independente do status true/false"
   [_]
   (controller/obter-todos))
 
-(defn- obter-ativos 
+(defn- obter-ativos
   "Retorna todos com status true"
   [_]
   (controller/obter-ativos))
 
-(defn- obter-por-id 
+(defn- obter-por-id
   "Retorna de acordo com o id informado"
   [request]
   (let [path-params (:path-params request)]
     (controller/obter-por-id path-params)))
 
-(defn- atualizar-status 
+(defn- atualizar-status
   "Atualiza somente o status true/false"
   [request]
   (let [path-params (:path-params request)
         body-params (:json-params (bp/json-parser request))]
     (controller/atualizar-status path-params body-params)))
 
-(defn- atualizar 
+(defn- atualizar
   "Atualiza as informações"
   [request]
   (let [path-params (:path-params request)

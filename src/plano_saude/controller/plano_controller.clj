@@ -1,14 +1,14 @@
 (ns plano-saude.controller.plano-controller
-  (:require [ring.util.http-status :as http-status]
-            [plano-saude.validacoes.schemas :as schem]
-            [plano-saude.validacoes.validacoes :as valid]
+  (:require [clojure.string :as s]
+            [clojure.data.json :as json]
             [plano-saude.utils.util :as util]
-            [clojure.tools.logging :as log]
             [plano-saude.utils.mensagens :as msg]
             [plano-saude.database.plano-db :as db]
-            [clojure.data.json :as json]
             [plano-saude.utils.response :as respo]
-            [clojure.string :as s]))
+            [clojure.tools.logging :as log]
+            [ring.util.http-status :as http-status]
+            [plano-saude.validacoes.schemas :as schem]
+            [plano-saude.validacoes.validacoes :as valid]))
 
 
 (defn cadastrar [{:keys [cnpj nome descricao] :as mapa}]
