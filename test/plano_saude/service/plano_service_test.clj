@@ -89,10 +89,7 @@
         (is (= 200 (:status result-atualizado)))
         (is (= 200 (:status result-consulta)))
 
-        (let [rs (first (json/decode (:body result-consulta) keyword))
-              rs-cnpj (:cnpj rs)
-              rs-nome (:nome rs)
-              rs-descricao (:descricao rs)]
-          (is (= cnpj rs-cnpj))
-          (is (= nome rs-nome))
-          (is (= descricao rs-descricao)))))))
+        (let [rs (first (json/decode (:body result-consulta) keyword))]
+          (is (= cnpj (:cnpj rs)))
+          (is (= nome (:nome rs)))
+          (is (= descricao (:descricao rs))))))))

@@ -50,6 +50,20 @@
                              :mensagem)
                          "Não foi possível concluir a operação."))))
 
+    (testing "Tenta cadastrar/atualizar com um plano inexistente"
+      (let [result-cadastrar (cadastrar (str ficha "cadastrar") (assoc dados-ficha :cd-plano 9999))
+            result-atualizar (atualizar (str ficha "atualizar/1") (assoc dados-ficha :cd-plano 9999))
+            msg-nao-encontrado "Plano não encontrado."
+            extrair-msg #(-> (json/decode (:body %) keyword)
+                             :mensagem)]
+        (is (= 500 (:status result-cadastrar)))
+        (is (s/includes? (extrair-msg result-cadastrar)
+                         msg-nao-encontrado))
+        (is (= 500 (:status result-atualizar)))
+        (is (s/includes? (extrair-msg result-atualizar)
+                         msg-nao-encontrado))))
+
+
     (testing "Consulta por id"
       (let [result (consultar (str ficha "obter/1"))]
         (is (= 1 (count (json/decode (:body result) keyword))))

@@ -25,7 +25,7 @@
         (respo/response http-status/internal-server-error (json/write-str
                                                            {:mensagem retorno}))))
     (catch Exception e
-      (if (s/includes? (ex-message e) "unique")
+      (if (s/includes? (ex-message e) "unique_cpf_cd_plano")
         (respo/erro-registro-unico-response)
         (respo/erro-response)))))
 
@@ -82,7 +82,7 @@
         (some? retorno) (respo/response http-status/internal-server-error (json/write-str {:mensagem retorno}))
         :else (respo/erro-registro-nao-encontrado-response)))
     (catch Exception e
-      (if (s/includes? (ex-message e) "unique")
+      (if (s/includes? (ex-message e) "unique_cpf_cd_plano")
         (respo/erro-registro-unico-response)
         (respo/erro-response)))))
 

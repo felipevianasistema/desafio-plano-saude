@@ -11,7 +11,6 @@ pom.xml.asc
 .hgignore
 .hg/
 .lsp/sqlite.db
-.clj-kondo/.cache/2021.08.06/lock
-.clj-kondo/.cache/2021.08.06/clj/plano-saude.database.config.transit.json
-.clj-kondo/.cache/2021.08.07-SNAPSHOT/lock
-.clj-kondo/.cache/2021.08.07-SNAPSHOT/clj/plano-saude.database.config.transit.json
+.clj-kondo/.cache/*
+.lsp/.cache/sqlite.db
+.calva/output-window/output.calva-repl
