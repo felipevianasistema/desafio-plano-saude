@@ -1,11 +1,11 @@
 (ns plano-saude.controller.plano-controller
   (:require [clojure.string :as s]
             [clojure.data.json :as json]
+            [clojure.tools.logging :as log]
             [plano-saude.utils.util :as util]
             [plano-saude.utils.mensagens :as msg]
             [plano-saude.database.plano-db :as db]
             [plano-saude.utils.response :as respo]
-            [clojure.tools.logging :as log]
             [ring.util.http-status :as http-status]
             [plano-saude.validacoes.schemas :as schem]
             [plano-saude.validacoes.validacoes :as valid]))

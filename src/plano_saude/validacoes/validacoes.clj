@@ -31,7 +31,7 @@
     false))
 
 (defn validar-data?
-  "Verifica se a data é string e se está no formato correto"
+  "Verifica se a data é verdadeira e está no formato correto"
   [data]
   (try
     (let [formato (DateTimeFormatter/ofPattern "dd/MM/yyyy")]
