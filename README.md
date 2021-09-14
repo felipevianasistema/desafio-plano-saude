@@ -40,3 +40,7 @@ O script para criação das tabelas está no diretório: /src/main/resources/sql
 - Ao executar os testes, a aplicação cria o banco de dados em memória para não afetar o banco local
 
 ![alt text](https://i.ibb.co/gWL0dkX/sssss.png)
+
+## Implementações futuras
+
+- Documentação swagger
