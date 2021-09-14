@@ -12,10 +12,10 @@
                  [org.clojure/java.jdbc "0.7.12"]
                  [clj-postgresql "0.7.0"]
                  [org.clojure/data.json "2.4.0"]
-                 [com.opentable.components/otj-pg-embedded "0.7.1"]
                  [com.h2database/h2 "1.3.175"]
                  [cheshire "5.10.0"]
-                 [cadastro-de-pessoa "0.4.0"]]
+                 [cadastro-de-pessoa "0.4.0"]
+                 [org.clojure/tools.logging "1.1.0"]]
   :main ^:skip-aot plano-saude.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
@@ -23,7 +23,6 @@
                                        [lambdaisland/kaocha "1.0.887"]
                                        [lambdaisland/kaocha-cloverage "1.0.72"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}}
-  :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]}
-  :resource-paths ["src/main/resources"])
+  :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]})
 
 

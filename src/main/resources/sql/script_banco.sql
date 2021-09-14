@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS ficha_inclusao;
 DROP TABLE IF EXISTS plano;
 
 --###########################################
---# Criação das tabelas
+--# Cria as tabelas
 --###########################################
 create table plano(
 	id        		serial         	not null,
@@ -38,7 +38,7 @@ CONSTRAINT unique_cpf_cd_plano UNIQUE (cpf, cd_plano)
 );
 
 --###########################################
---# Cadastro dos Planos
+--# Cadastra os Planos
 --###########################################
 
 INSERT INTO public.plano(cnpj, nome, descricao, ativo, dt_registro)	VALUES ('99066063000108', 'Norte Europa', 'Plano de saúde', true, now());

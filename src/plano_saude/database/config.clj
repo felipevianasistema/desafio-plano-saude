@@ -28,6 +28,7 @@
   [tipo]
   (if (= "prod" tipo)
     (reset! con-db-atm producao)
-    (reset! con-db-atm teste))
-  (jdbc/execute! @con-db-atm [(slurp (io/resource "main/resources/sql/script_banco.sql"))]))
-  
+    (do
+      (reset! con-db-atm teste)
+      (jdbc/execute! @con-db-atm [(slurp (io/resource "main/resources/sql/script_banco.sql"))]))))
+

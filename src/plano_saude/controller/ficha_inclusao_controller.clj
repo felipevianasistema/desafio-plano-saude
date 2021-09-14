@@ -1,6 +1,7 @@
 (ns plano-saude.controller.ficha-inclusao-controller
   (:require [ring.util.http-status :as http-status]
             [plano-saude.validacoes.validacoes :as valid]
+            [clojure.tools.logging :as log]
             [plano-saude.utils.util :as util]
             [plano-saude.validacoes.schemas :as schem]
             [plano-saude.database.ficha-inclusao-db :as db]
@@ -25,6 +26,7 @@
         (respo/response http-status/internal-server-error (json/write-str
                                                            {:mensagem retorno}))))
     (catch Exception e
+      (log/error e mapa)
       (if (s/includes? (ex-message e) "unique_cpf_cd_plano")
         (respo/erro-registro-unico-response)
         (respo/erro-response)))))
@@ -34,7 +36,8 @@
     (let [lista (db/obter-todos)
           http (util/verifica-http-code lista)]
       (respo/response http (json/write-str (vec lista))))
-    (catch Exception _
+    (catch Exception e
+      (log/error e)
       (respo/erro-response))))
 
 (defn obter-ativos []
@@ -42,7 +45,8 @@
     (let [lista (db/obter-ativos)
           http (util/verifica-http-code lista)]
       (respo/response http (json/write-str (vec lista))))
-    (catch Exception _
+    (catch Exception e
+      (log/error e)
       (respo/erro-response))))
 
 (defn obter-por-id [{:keys [id]}]
@@ -50,7 +54,8 @@
     (let [lista (db/obter-por-id (Integer/parseInt id))
           http (util/verifica-http-code lista)]
       (respo/response http (json/write-str (vec lista))))
-    (catch Exception _
+    (catch Exception e
+      (log/error e)
       (respo/erro-response))))
 
 (defn atualizar-status [{:keys [id]}
@@ -60,7 +65,8 @@
       (if (= (first linha) 1)
         (respo/sucesso-response)
         (respo/erro-registro-nao-encontrado-response)))
-    (catch Exception _
+    (catch Exception e
+      (log/error e)
       (respo/erro-response))))
 
 (defn atualizar [{:keys [id]}
@@ -82,6 +88,7 @@
         (some? retorno) (respo/response http-status/internal-server-error (json/write-str {:mensagem retorno}))
         :else (respo/erro-registro-nao-encontrado-response)))
     (catch Exception e
+      (log/error e mapa)
       (if (s/includes? (ex-message e) "unique_cpf_cd_plano")
         (respo/erro-registro-unico-response)
         (respo/erro-response)))))
