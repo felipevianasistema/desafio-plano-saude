@@ -32,6 +32,10 @@ O projeto possui exemplos de como criar uma API utilizando Clojure, Pedestal e b
 -	.../ficha-inclusao/atualizar-status/:id
 -	.../ficha-inclusao/atualizar/:id
 
+## Testes
+
+- Executar o comando: bin/kaocha
+
 ## Banco de dados
 
 O script para criação das tabelas está no diretório: /src/main/resources/sql/script_banco.sql
