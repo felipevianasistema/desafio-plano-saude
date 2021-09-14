@@ -63,7 +63,6 @@
         (is (s/includes? (extrair-msg result-atualizar)
                          msg-nao-encontrado))))
 
-
     (testing "Consulta por id"
       (let [result (consultar (str ficha "obter/1"))]
         (is (= 1 (count (json/decode (:body result) keyword))))
