@@ -1,30 +1,10 @@
 (ns plano-saude.service.plano-service-test
   (:require [clojure.test :refer :all]
-            [io.pedestal.test :refer :all]
             [clojure.string :as s]
-            [plano-saude.utils.util :as util]
-            [io.pedestal.http :as service]
             [cheshire.core :as json]
-            [clojure.data.json :as j]
-            [plano-saude.service.plano-service :as plano-service]
+            [plano-saude.utils.util :as util]
+            [plano-saude.service.compartilhado :as req]
             [plano-saude.database.config :as config-db]))
-
-
-(def service
-  (-> (service/default-interceptors {::service/routes plano-service/rotas})
-      service/service-fn
-      ::service/service-fn))
-
-(defn consultar [url]
-  (response-for service :get url))
-
-(defn cadastrar [url body]
-  (response-for service :post url
-                :body (j/json-str body)))
-
-(defn atualizar [url body]
-  (response-for service :put url
-                :body (j/json-str body)))
 
 (deftest rotas-plano-saude-teste
   (config-db/tipo-conexao-db "teste")
@@ -35,39 +15,39 @@
                      :descricao "Desc. Plano 1"}]
 
     (testing "Cadastra"
-      (let [result (cadastrar (str plano "cadastrar") dados-plano)]
+      (let [result (req/cadastrar (str plano "cadastrar") dados-plano)]
         (is (= 201 (:status result)))
         (is (s/includes? (-> (json/decode (:body result) keyword)
                              :mensagem)
                          "Operação concluída com sucesso."))))
 
     (testing "Tenta cadastrar um já existente"
-      (let [result (cadastrar (str plano "cadastrar") dados-plano)]
-        (is (= 500 (:status result)))
+      (let [result (req/cadastrar (str plano "cadastrar") dados-plano)]
+        (is (= 400 (:status result)))
         (is (s/includes? (-> (json/decode (:body result) keyword)
                              :mensagem)
                          "Não foi possível concluir a operação."))))
 
     (testing "Consulta por id"
-      (let [result (consultar (str plano "obter/1"))]
+      (let [result (req/consultar (str plano "obter/1"))]
         (is (= 200 (:status result)))
         (is (= 1 (count (json/decode (:body result) keyword))))))
 
     (testing "Consulta por id inexistente"
-      (let [result (consultar (str plano "obter/9999"))]
+      (let [result (req/consultar (str plano "obter/9999"))]
         (is (= 404 (:status result)))
         (is (= 0 (count (json/decode (:body result) keyword))))))
 
     (testing "Consulta todos"
-      (let [result (consultar (str plano "obter-todos"))]
+      (let [result (req/consultar (str plano "obter-todos"))]
         (is (= 200 (:status result)))
         (is (= 5 (count (json/decode (:body result) keyword))))))
 
     (testing "Atualiza para inativo, consulta se o status foi atualizado, obtem somente ativos e todos"
-      (let [result-atualizado (atualizar (str plano "atualizar-status/2") (assoc dados-plano :ativo false))
-            result-consulta (consultar (str plano "obter/2"))
-            result-ativos (consultar (str plano "obter-ativos"))
-            result-todos (consultar (str plano "obter-todos"))]
+      (let [result-atualizado (req/atualizar (str plano "atualizar-status/2") (assoc dados-plano :ativo false))
+            result-consulta (req/consultar (str plano "obter/2"))
+            result-ativos (req/consultar (str plano "obter-ativos"))
+            result-todos (req/consultar (str plano "obter-todos"))]
 
         (is (= 200 (:status result-atualizado)))
         (is (= false (-> (json/decode (:body result-consulta) keyword)
@@ -80,11 +60,11 @@
       (let [cnpj (util/gerar-cnpj)
             nome "Novo nome"
             descricao "Nova descrição"
-            result-atualizado (atualizar (str plano "atualizar/4") (-> dados-plano
+            result-atualizado (req/atualizar (str plano "atualizar/4") (-> dados-plano
                                                                        (update :cnpj (constantly cnpj))
                                                                        (update :nome (constantly nome))
                                                                        (update :descricao (constantly descricao))))
-            result-consulta (consultar (str plano "obter/4"))]
+            result-consulta (req/consultar (str plano "obter/4"))]
 
         (is (= 200 (:status result-atualizado)))
         (is (= 200 (:status result-consulta)))

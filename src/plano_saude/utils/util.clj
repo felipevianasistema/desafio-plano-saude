@@ -13,7 +13,7 @@
         (java.sql.Date.))))
 
 (defn verifica-http-code
-  "Se houver dados, retorna ok.
+  "Se houver dados, retorna 200.
    Se não houver, retorna 404."
   [lista]
   (if (empty? lista)
