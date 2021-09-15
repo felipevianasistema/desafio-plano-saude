@@ -12,7 +12,7 @@ O projeto possui exemplos de como criar uma API utilizando Clojure, Pedestal e b
 ## Endpoints
 
 - Url base: http://localhost:3000
-- Collection do Postman: https://drive.google.com/drive/folders/1_FrCPWo9Qej6U_ThDZpTqvDVor2AvrCT?usp=sharing
+- Collection do Postman [aqui](https://drive.google.com/drive/folders/1_FrCPWo9Qej6U_ThDZpTqvDVor2AvrCT?usp=sharing)
 
 ###### Plano
 
