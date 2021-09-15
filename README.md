@@ -12,7 +12,7 @@ O projeto possui exemplos de como criar uma API utilizando Clojure, Pedestal e b
 ## Endpoints
 
 - Url base: http://localhost:3000
-- Collection do Postman: https://drive.google.com/drive/folders/1_FrCPWo9Qej6U_ThDZpTqvDVor2AvrCT?usp=sharing
+- Collection do Postman [aqui](https://drive.google.com/drive/folders/1_FrCPWo9Qej6U_ThDZpTqvDVor2AvrCT?usp=sharing)
 
 ###### Plano
 
@@ -40,7 +40,7 @@ O projeto possui exemplos de como criar uma API utilizando Clojure, Pedestal e b
 
 O script para criação das tabelas está no diretório: /src/main/resources/sql/script_banco.sql
 
-- Ao iniciar a aplicação utilizando o comando 'lein run', o projeto utiliza o banco de dados da máquina local
+- Ao iniciar a aplicação utilizando o comando 'lein run', o projeto utiliza o banco de dados da máquina local (postgres)
 - Ao executar os testes, a aplicação cria o banco de dados em memória para não afetar o banco local
 
 ![alt text](https://i.ibb.co/gWL0dkX/sssss.png)
