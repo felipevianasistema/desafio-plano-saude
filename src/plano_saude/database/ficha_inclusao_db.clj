@@ -1,7 +1,7 @@
  (ns plano-saude.database.ficha-inclusao-db
    (:require [clojure.java.jdbc :as jdbc]
-             [plano-saude.database.config :as config]
              [plano-saude.utils.util :as util]
+             [plano-saude.database.config :as config]
              [plano-saude.database.queries.ficha-inclusao-queries :as query]))
 
 

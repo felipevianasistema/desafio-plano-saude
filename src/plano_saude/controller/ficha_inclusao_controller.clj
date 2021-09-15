@@ -11,7 +11,8 @@
             [plano-saude.database.ficha-inclusao-db :as db]))
 
 (defn cadastrar [{:keys [nome cpf dt-admissao email endereco peso-kg
-                         altura-cm hrs-meditadas-ultimos-dias cd-plano] :as mapa}]
+                         altura-cm hrs-meditadas-ultimos-dias cd-plano]
+                  :as mapa}]
   (try
     (let [retorno (cond
                     (= cd-plano 1) (valid/validar-schema schem/norte-europa-schema mapa)
@@ -71,7 +72,8 @@
 
 (defn atualizar [{:keys [id]}
                  {:keys [nome cpf dt-admissao email endereco
-                         peso-kg altura-cm hrs-meditadas-ultimos-dias cd-plano] :as mapa}]
+                         peso-kg altura-cm hrs-meditadas-ultimos-dias cd-plano] 
+                  :as mapa}]
   (try
     (let [retorno (cond
                     (= cd-plano 1) (valid/validar-schema schem/norte-europa-schema mapa)

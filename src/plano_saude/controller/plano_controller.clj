@@ -11,7 +11,8 @@
             [plano-saude.validacoes.validacoes :as valid]))
 
 
-(defn cadastrar [{:keys [cnpj nome descricao] :as mapa}]
+(defn cadastrar [{:keys [cnpj nome descricao]
+                  :as mapa}]
   (try
     (let [retorno (valid/validar-schema schem/plano-schema mapa)]
       (if (nil? retorno)
@@ -65,7 +66,8 @@
       (respo/erro-response))))
 
 (defn atualizar [{:keys [id]}
-                 {:keys [cnpj nome descricao] :as mapa}]
+                 {:keys [cnpj nome descricao]
+                  :as mapa}]
   (try
     (let [retorno (valid/validar-schema schem/plano-schema mapa)
           linha (when (nil? retorno)

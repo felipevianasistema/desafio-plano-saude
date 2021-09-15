@@ -41,42 +41,43 @@
         (is (= 201 (:status result)))
         (is (s/includes? (-> (json/decode (:body result) keyword)
                              :mensagem)
-                         "sucesso"))))
+                         "Operação concluída com sucesso."))))
 
-    (testing "Tenta cadastrar o mesmo"
+    (testing "Tenta cadastrar um já existente"
       (let [result (cadastrar (str ficha "cadastrar") dados-ficha)]
         (is (= 500 (:status result)))
         (is (s/includes? (-> (json/decode (:body result) keyword)
                              :mensagem)
                          "Não foi possível concluir a operação."))))
 
-    (testing "Tenta cadastrar/atualizar com um plano inexistente"
-      (let [result-cadastrar (cadastrar (str ficha "cadastrar") (assoc dados-ficha :cd-plano 9999))
-            result-atualizar (atualizar (str ficha "atualizar/1") (assoc dados-ficha :cd-plano 9999))
-            msg-nao-encontrado "Plano não encontrado."
-            extrair-msg #(-> (json/decode (:body %) keyword)
-                             :mensagem)]
-        (is (= 500 (:status result-cadastrar)))
-        (is (s/includes? (extrair-msg result-cadastrar)
-                         msg-nao-encontrado))
-        (is (= 500 (:status result-atualizar)))
-        (is (s/includes? (extrair-msg result-atualizar)
-                         msg-nao-encontrado))))
+    (testing "Tenta cadastrar para um plano inexistente"
+      (let [result (cadastrar (str ficha "cadastrar") (assoc dados-ficha :cd-plano 9999))]
+        (is (= 500 (:status result)))
+        (is (s/includes? (-> (json/decode (:body result) keyword)
+                             :mensagem)
+                         "Plano não encontrado."))))
+
+    (testing "Tenta atualizar para um plano inexistente"
+      (let [result (atualizar (str ficha "atualizar/1") (assoc dados-ficha :cd-plano 9999))]
+        (is (= 500 (:status result)))
+        (is (s/includes? (-> (json/decode (:body result) keyword)
+                             :mensagem)
+                         "Plano não encontrado."))))
 
     (testing "Consulta por id"
       (let [result (consultar (str ficha "obter/1"))]
-        (is (= 1 (count (json/decode (:body result) keyword))))
-        (is (= 200 (:status result)))))
+        (is (= 200 (:status result)))
+        (is (= 1 (count (json/decode (:body result) keyword))))))
 
     (testing "Consulta por id inexistente"
       (let [result (consultar (str ficha "obter/9999"))]
-        (is (= 0 (count (json/decode (:body result) keyword))))
-        (is (= 404 (:status result)))))
+        (is (= 404 (:status result)))
+        (is (= 0 (count (json/decode (:body result) keyword))))))
 
     (testing "Consulta todos"
       (let [result (consultar (str ficha "obter-todos"))]
-        (is (= 1 (count (json/decode (:body result) keyword))))
-        (is (= 200 (:status result)))))
+        (is (= 200 (:status result)))
+        (is (= 1 (count (json/decode (:body result) keyword))))))
 
     (testing "Atualiza para inativo, consulta se o status foi atualizado, obtem somente ativos e todos"
       (let [result-atualizado (atualizar (str ficha "atualizar-status/1") (assoc dados-ficha :ativo false))
@@ -103,10 +104,8 @@
         (is (= 200 (:status result-atualizado)))
         (is (= 200 (:status result-consulta)))
 
-        (let [rs (first (json/decode (:body result-consulta) keyword))
-              rs-cpf (:cpf rs)
-              rs-nome (:nome rs)
-              rs-email (:email rs)]
-          (is (= cpf rs-cpf))
-          (is (= nome rs-nome))
-          (is (= email rs-email)))))))
+        (let [result (first
+                      (json/decode (:body result-consulta) keyword))]
+          (is (= cpf (:cpf result)))
+          (is (= nome (:nome result)))
+          (is (= email (:email result))))))))

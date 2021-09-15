@@ -39,9 +39,9 @@
         (is (= 201 (:status result)))
         (is (s/includes? (-> (json/decode (:body result) keyword)
                              :mensagem)
-                         "sucesso"))))
+                         "Operação concluída com sucesso."))))
 
-    (testing "Tenta cadastrar o mesmo"
+    (testing "Tenta cadastrar um já existente"
       (let [result (cadastrar (str plano "cadastrar") dados-plano)]
         (is (= 500 (:status result)))
         (is (s/includes? (-> (json/decode (:body result) keyword)
@@ -50,18 +50,18 @@
 
     (testing "Consulta por id"
       (let [result (consultar (str plano "obter/1"))]
-        (is (= 1 (count (json/decode (:body result) keyword))))
-        (is (= 200 (:status result)))))
+        (is (= 200 (:status result)))
+        (is (= 1 (count (json/decode (:body result) keyword))))))
 
     (testing "Consulta por id inexistente"
       (let [result (consultar (str plano "obter/9999"))]
-        (is (= 0 (count (json/decode (:body result) keyword))))
-        (is (= 404 (:status result)))))
+        (is (= 404 (:status result)))
+        (is (= 0 (count (json/decode (:body result) keyword))))))
 
     (testing "Consulta todos"
       (let [result (consultar (str plano "obter-todos"))]
-        (is (= 5 (count (json/decode (:body result) keyword))))
-        (is (= 200 (:status result)))))
+        (is (= 200 (:status result)))
+        (is (= 5 (count (json/decode (:body result) keyword))))))
 
     (testing "Atualiza para inativo, consulta se o status foi atualizado, obtem somente ativos e todos"
       (let [result-atualizado (atualizar (str plano "atualizar-status/2") (assoc dados-plano :ativo false))
@@ -89,7 +89,8 @@
         (is (= 200 (:status result-atualizado)))
         (is (= 200 (:status result-consulta)))
 
-        (let [rs (first (json/decode (:body result-consulta) keyword))]
-          (is (= cnpj (:cnpj rs)))
-          (is (= nome (:nome rs)))
-          (is (= descricao (:descricao rs))))))))
+        (let [result (first
+                      (json/decode (:body result-consulta) keyword))]
+          (is (= cnpj (:cnpj result)))
+          (is (= nome (:nome result)))
+          (is (= descricao (:descricao result))))))))

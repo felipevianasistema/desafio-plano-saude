@@ -9,28 +9,28 @@
            java.time.LocalDate))
 
 
-(def msg-valor-incorreto "Informe o valor correto")
+(def msg-valor-invalido "Informe o valor correto")
+(def msg-data-invalida "Data inválida")
+(def msg-cpf-invalido "Cpf inválido")
+(def msg-cnpj-invalido "Cnpj inválido")
+(def msg-email-invalido "E-mail inválido")
 
 (defn str?
   "Valida se o valor é uma string e se está preenchida"
   [str]
   (not (empty? str)))
 
-(defn validar-cpf?
+(defn cpf-valido?
   "Valida se o cpf é uma string e é válido"
   [cpf]
-  (if (string? cpf)
-    (cpf/valid? cpf)
-    false))
+  (and (string? cpf) (cpf/valid? cpf)))
 
-(defn validar-cnpj?
+(defn cnpj-valido?
   "Valida se o cnpj é uma string e é válido"
   [cnpj]
-  (if (string? cnpj)
-    (cnpj/valid? cnpj)
-    false))
+  (and (string? cnpj) (cnpj/valid? cnpj)))
 
-(defn validar-data?
+(defn data-valida?
   "Verifica se a data é verdadeira e está no formato correto"
   [data]
   (try
@@ -40,7 +40,7 @@
     (catch DateTimeParseException _
       false)))
 
-(defn validar-email?
+(defn email-valido?
   "Valida se o e-mail é válido"
   [email]
   (try
@@ -50,13 +50,13 @@
 
 (defn validar-schema
   "Valida se o mapa está de acordo com o schema definido.
-   Se retornar nil, o mapa está ok."
+   Se retornar nil indica que o mapa está ok."
   [schema mapa]
   (-> schema
       (m/explain mapa)
       (me/humanize)
       (String/valueOf)
       (s/replace "missing required key" "Campo obrigatório")
-      (s/replace "disallowed key" "Campo desnecessário")
+      (s/replace "disallowed key" "Este campo não deve ser informado")
       (s/replace "null" "nil")
       (read-string)))

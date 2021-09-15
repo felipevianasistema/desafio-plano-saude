@@ -40,11 +40,11 @@
     (controller/atualizar path-params body-params)))
 
 (def rotas
-  (let [path "/ficha-inclusao/"]
+  (let [ficha "/ficha-inclusao/"]
     (table/table-routes
-     [[(str path "cadastrar") :post cadastrar :route-name :cadastrar]
-      [(str path "obter-todos") :get obter-todos :route-name :obter-todos]
-      [(str path "obter-ativos") :get obter-ativos :route-name :obter-ativos]
-      [(str path "obter/:id") :get obter-por-id :route-name :obter-por-id]
-      [(str path "atualizar-status/:id") :put atualizar-status :route-name :atualizar-status]
-      [(str path "atualizar/:id") :put atualizar :route-name :atualizar]])))
+     [[(str ficha "cadastrar") :post cadastrar :route-name :cadastrar]
+      [(str ficha "obter-todos") :get obter-todos :route-name :obter-todos]
+      [(str ficha "obter-ativos") :get obter-ativos :route-name :obter-ativos]
+      [(str ficha "obter/:id") :get obter-por-id :route-name :obter-por-id]
+      [(str ficha "atualizar-status/:id") :put atualizar-status :route-name :atualizar-status]
+      [(str ficha "atualizar/:id") :put atualizar :route-name :atualizar]])))

@@ -9,29 +9,29 @@ DROP TABLE IF EXISTS plano;
 --# Cria as tabelas
 --###########################################
 create table plano(
-	id        		serial         	not null,
-	cnpj           	varchar(18)    	not null,
-	nome       		varchar(70)    	not null,
-	descricao       varchar(100)   	not null,
-	ativo           bool 	   		not null,
-	dt_registro     date 			DEFAULT CURRENT_DATE,
+	id        		serial       not null,
+	cnpj           	varchar(18)  not null,
+	nome       		varchar(70)  not null,
+	descricao       varchar(100) not null,
+	ativo           bool 	   	 not null,
+	dt_registro     date 		 DEFAULT CURRENT_DATE,
 primary key(id),
 CONSTRAINT unique_cnpj UNIQUE (cnpj)
 );
 
 create table ficha_inclusao(
-	id            				serial      not null,
-	nome              			varchar(70) null,
-	cpf               			varchar(14) not null,
-	dt_admissao             	date     null,
+	id            				serial       not null,
+	nome              			varchar(70)  null,
+	cpf               			varchar(14)  not null,
+	dt_admissao             	date         null,
 	email                		varchar(60)  null,
-	endereco                	varchar(150)  null,
-	peso_kg                		decimal  null,
-	altura_cm               	decimal  null,
-	hrs_meditadas_ultimos_dias  decimal  null,
-	ativo                		bool 	 not null,
-	dt_registro     			date 	 DEFAULT CURRENT_DATE,
-	cd_plano                	integer  not null,
+	endereco                	varchar(150) null,
+	peso_kg                		decimal      null,
+	altura_cm               	decimal      null,
+	hrs_meditadas_ultimos_dias  decimal      null,
+	ativo                		bool 	     not null,
+	dt_registro     			date 	     DEFAULT CURRENT_DATE,
+	cd_plano                	integer      not null,
 primary key (id),
 constraint fk_cd_plano foreign key (cd_plano) references plano (id),
 CONSTRAINT unique_cpf_cd_plano UNIQUE (cpf, cd_plano)
