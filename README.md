@@ -32,11 +32,19 @@ O projeto possui exemplos de como criar uma API utilizando Clojure, Pedestal e b
 -	.../ficha-inclusao/atualizar-status/:id
 -	.../ficha-inclusao/atualizar/:id
 
+## Testes
+
+- Executar o comando: bin/kaocha
+
 ## Banco de dados
 
 O script para criação das tabelas está no diretório: /src/main/resources/sql/script_banco.sql
 
-- Ao iniciar a aplicação utilizando o comando 'lein run' o projeto utiliza o banco de dados da máquina local
+- Ao iniciar a aplicação utilizando o comando 'lein run', o projeto utiliza o banco de dados da máquina local
 - Ao executar os testes, a aplicação cria o banco de dados em memória para não afetar o banco local
 
 ![alt text](https://i.ibb.co/gWL0dkX/sssss.png)
+
+## Implementações futuras
+
+- Documentação swagger
