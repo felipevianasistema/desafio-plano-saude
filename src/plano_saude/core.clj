@@ -12,5 +12,5 @@
 
 (defn -main
   [& args]
-   (config/tipo-conexao-db "prod")
-   (http/start (criar-servidor)))
+  (config/tipo-conexao-db "prod")
+  (http/start (criar-servidor)))
