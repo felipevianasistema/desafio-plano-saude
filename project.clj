@@ -15,7 +15,8 @@
                  [com.h2database/h2 "1.3.175"]
                  [cheshire "5.10.0"]
                  [cadastro-de-pessoa "0.4.0"]
-                 [org.clojure/tools.logging "1.1.0"]]
+                 [org.clojure/tools.logging "1.1.0"]
+                 [nubank/matcher-combinators "3.3.1"]]
   :main ^:skip-aot plano-saude.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
