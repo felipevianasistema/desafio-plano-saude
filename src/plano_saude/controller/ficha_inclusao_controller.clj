@@ -18,7 +18,7 @@
                       (= cd-plano 2) (valid/validar-schema schem/pampulha-intermedica-schema mapa)
                       (= cd-plano 3) (valid/validar-schema schem/dental-sorriso-schema mapa)
                       (= cd-plano 4) (valid/validar-schema schem/mente-sa-corpo-sao-schema mapa)
-                      :else (:plano-n-encontrado msg/mensagem))]
+                      :else (:plano-nao-encontrado msg/mensagem))]
       (if (nil? validacao)
         (do (db/cadastrar nome cpf dt-admissao email endereco peso-kg altura-cm hrs-meditadas-ultimos-dias cd-plano)
             (respo/sucesso-response http-status/created))
@@ -32,8 +32,9 @@
 (defn obter-todos []
   (try
     (let [lista (db/obter-todos)
-          http (util/verifica-http-code lista)]
-      (respo/response http (vec lista)))
+          resultado (util/remover-nils lista)
+          http (util/verifica-http-code resultado)]
+      (respo/response http (vec resultado)))
     (catch Exception e
       (log/error e)
       (respo/erro-response))))
@@ -41,8 +42,9 @@
 (defn obter-ativos []
   (try
     (let [lista (db/obter-ativos)
-          http (util/verifica-http-code lista)]
-      (respo/response http (vec lista)))
+          resultado (util/remover-nils lista)
+          http (util/verifica-http-code resultado)]
+      (respo/response http (vec resultado)))
     (catch Exception e
       (log/error e)
       (respo/erro-response))))
@@ -50,8 +52,9 @@
 (defn obter-por-id [{:keys [id]}]
   (try
     (let [lista (db/obter-por-id (Integer/parseInt id))
-          http (util/verifica-http-code lista)]
-      (respo/response http (vec lista)))
+          resultado (util/remover-nils lista)
+          http (util/verifica-http-code resultado)]
+      (respo/response http (vec resultado)))
     (catch Exception e
       (log/error e)
       (respo/erro-response))))
@@ -77,7 +80,7 @@
                       (= cd-plano 2) (valid/validar-schema schem/pampulha-intermedica-schema mapa)
                       (= cd-plano 3) (valid/validar-schema schem/dental-sorriso-schema mapa)
                       (= cd-plano 4) (valid/validar-schema schem/mente-sa-corpo-sao-schema mapa)
-                      :else (:plano-n-encontrado msg/mensagem))
+                      :else (:plano-nao-encontrado msg/mensagem))
           linha (when (nil? validacao)
                   (db/atualizar (Integer/parseInt id) nome cpf dt-admissao email
                                 endereco peso-kg altura-cm hrs-meditadas-ultimos-dias cd-plano))]

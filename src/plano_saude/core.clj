@@ -5,6 +5,8 @@
             [plano-saude.service.plano-service :as plano]
             [plano-saude.service.ficha-inclusao-service :as ficha-inclusao]))
 
+; [melhoria] Remover string do parâmetro
+
 (defn- iniciar-servidor
   "Inicializa o servidor da API"
   []

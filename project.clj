@@ -16,7 +16,8 @@
                  [cheshire "5.10.0"]
                  [cadastro-de-pessoa "0.4.0"]
                  [org.clojure/tools.logging "1.1.0"]
-                 [nubank/matcher-combinators "3.3.1"]]
+                 [nubank/matcher-combinators "3.3.1"]
+                 [medley "1.3.0"]]
   :main ^:skip-aot plano-saude.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}

@@ -2,7 +2,8 @@
   (:require [ring.util.http-status :as http-status]
             [cadastro-de-pessoa.cnpj :as cnpj]
             [cadastro-de-pessoa.cpf :as cpf]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [medley.core :as medley]))
 
 (defn formatar-data-db
   "Converte a data no formato do banco de dados"
@@ -37,3 +38,8 @@
   []
   (-> (cpf/gen)
       remover-mascara-cpf-cnpj))
+
+(defn remover-nils 
+  "Remove todas as chaves com valores nulos"
+  [lista] 
+  (map #(medley/remove-vals nil? %) lista))

@@ -4,6 +4,7 @@
             [plano-saude.validacoes.schemas :as schem]
             [plano-saude.validacoes.validacoes :as val]))
 
+; [melhoria] separar os arquivos dos schemas do plano e ficha
 
 (deftest schemas-teste
   (testing "Teste - Plano"
